@@ -1,4 +1,4 @@
-# Project Title
+# dvbern-lib-excelmerger
 
 Library used to generate Excel-Reports using templates.
 
