@@ -1,6 +1,6 @@
 ## Contributing
 
-First off, thank you for considering contributing to the library lib-excelmerger
+First off, thank you for considering contributing to the library lib-excelmerger!
 ### 1. Where do I go from here?
 
 If you've noticed a bug or have a question that doesn't belong on the

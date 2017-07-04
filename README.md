@@ -1,6 +1,6 @@
 # Project Title
 
-Library used to generate Excel-Reports using templates
+Library used to generate Excel-Reports using templates.
 
 ## Getting Started
 
