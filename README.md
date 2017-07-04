@@ -1,6 +1,6 @@
 # dvbern-lib-excelmerger
 
-Library used to generate Excel-Reports using templates.
+This library can be used to generate Excel-Reports using templates.
 
 ## Getting Started
 
