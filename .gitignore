@@ -1,0 +1,10 @@
+#LibreOffice/Excel Lockfiles (z.B. beim Bearbeiten von basisreport.xls)
+.~lock*
+.access^
+
+### Maven
+target/
+
+### Intellij ###
+.idea/
+*.iml
