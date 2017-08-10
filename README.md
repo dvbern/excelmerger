@@ -44,5 +44,5 @@ See also the list of [contributors](https://github.com/dvbern/lib-excelmerger/co
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the [License.md](LICENSE.md) file for details.
+This project is licensed under the Apache 2.0 License - see the [LICENSE.md](LICENSE.md) file for details.
 
