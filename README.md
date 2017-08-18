@@ -1,4 +1,4 @@
-# dvbern-lib-excelmerger
+# excelmerger
 
 This Java library can be used to generate Excel-Reports using templates.
 
@@ -15,8 +15,8 @@ are replaced with dynamic values.
 
 ```xml
 <dependency>
-	<groupId>ch.dvbern.oss.lib.excelmerger</groupId>
-	<artifactId>dvbern-lib-excelmerger-impl</artifactId>
+	<groupId>ch.dvbern.oss.excelmerger</groupId>
+	<artifactId>excelmerger</artifactId>
 	<version>(NEWEST_VERSION)</version>
 </dependency>
 ```
@@ -39,7 +39,7 @@ One healthy social atmospehere is very important to us, wherefore we rate our Co
 
 * **DV Bern AG** - *Initial work* - [dvbern](https://github.com/dvbern)
 
-See also the list of [contributors](https://github.com/dvbern/lib-excelmerger/contributors)
+See also the list of [contributors](https://github.com/dvbern/excelmerger/contributors)
  who participated in this project.
 
 ## License
