@@ -1,4 +1,4 @@
-# dvbern-lib-excelmerger
+# excelmerger
 
 This Java library can be used to generate Excel-Reports using templates.
 
