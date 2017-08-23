@@ -15,8 +15,8 @@ are replaced with dynamic values.
 
 ```xml
 <dependency>
-	<groupId>ch.dvbern.oss.lib.excelmerger</groupId>
-	<artifactId>dvbern-lib-excelmerger-impl</artifactId>
+	<groupId>ch.dvbern.oss.excelmerger</groupId>
+	<artifactId>excelmerger</artifactId>
 	<version>(NEWEST_VERSION)</version>
 </dependency>
 ```
@@ -39,10 +39,10 @@ One healthy social atmospehere is very important to us, wherefore we rate our Co
 
 * **DV Bern AG** - *Initial work* - [dvbern](https://github.com/dvbern)
 
-See also the list of [contributors](https://github.com/dvbern/lib-excelmerger/contributors)
+See also the list of [contributors](https://github.com/dvbern/excelmerger/contributors)
  who participated in this project.
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the [License.md](LICENSE.md) file for details.
+This project is licensed under the Apache 2.0 License - see the [LICENSE.md](LICENSE.md) file for details.
 
