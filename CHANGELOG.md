@@ -1,3 +1,17 @@
+# 2.0.1 Naming conventions
+
+We dropped 'lib' in the `groupId` and `artifactId` name to comply with new naming conventions.
+
+Use the following dependency from now on:
+
+```xml
+<dependency>
+	<groupId>ch.dvbern.oss.excelmerger</groupId>
+	<artifactId>excelmerger-impl</artifactId>
+	<version>(NEWEST_VERSION)</version>
+</dependency>
+```
+
 # 2.0.0 Typing support
 
 ## License change
