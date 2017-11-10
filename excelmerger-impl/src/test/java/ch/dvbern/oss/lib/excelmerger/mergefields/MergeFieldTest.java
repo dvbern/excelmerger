@@ -13,14 +13,15 @@
  * limitations under the License.
  */
 
-package ch.dvbern.oss.lib.excelmerger;
+package ch.dvbern.oss.lib.excelmerger.mergefields;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField;
-import ch.dvbern.oss.lib.excelmerger.mergefields.SimpleMergeField;
+import ch.dvbern.oss.lib.excelmerger.ExcelMerger;
+import ch.dvbern.oss.lib.excelmerger.ExcelMergerDTO;
+import ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;

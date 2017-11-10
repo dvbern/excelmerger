@@ -68,7 +68,7 @@ public final class ExcelMergerTestUtil {
 	}
 
 	@Nonnull
-	static Cell createCell(@Nonnull Workbook wb, @Nonnull String pattern) {
+	public static Cell createCell(@Nonnull Workbook wb, @Nonnull String pattern) {
 		Sheet sheet = wb.createSheet("new sheet");
 
 		// Create a row and put some cells in it. Rows are 0 based.
@@ -80,14 +80,14 @@ public final class ExcelMergerTestUtil {
 		return cell;
 	}
 
-	static void setDataFormat(@Nonnull Workbook wb, @Nonnull Cell cell, @Nonnull String format) {
+	public static void setDataFormat(@Nonnull Workbook wb, @Nonnull Cell cell, @Nonnull String format) {
 		CellStyle cellStyle = wb.createCellStyle();
 		CreationHelper createHelper = wb.getCreationHelper();
 		cellStyle.setDataFormat(createHelper.createDataFormat().getFormat(format));
 		cell.setCellStyle(cellStyle);
 	}
 
-	static void writeWorkbookToFile(@Nonnull Workbook wb, @Nonnull String sheetName) throws IOException {
+	public static void writeWorkbookToFile(@Nonnull Workbook wb, @Nonnull String sheetName) throws IOException {
 		try (OutputStream out = new FileOutputStream("target/" + sheetName)) {
 			wb.write(out);
 		}

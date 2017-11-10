@@ -109,10 +109,15 @@ public class CopyRowTest {
 
 		ExcelMergerTestUtil.writeWorkbookToFile(wb, filename);
 
+		int repeatGroupOffset = 3;
 		assertEquals(numberOfCopies * 2L, sheet.getNumMergedRegions());
 		for (int i = 0; i < numberOfCopies; i++) {
-			CellRangeAddress cellRangeAddress = new CellRangeAddress(i, i, 0, 2);
-			sheet.getMergedRegions().contains(cellRangeAddress);
+			int groupStartRow = i * repeatGroupOffset;
+			CellRangeAddress singleRowRange = new CellRangeAddress(groupStartRow, groupStartRow, 0, 2);
+			CellRangeAddress doubleRowRange = new CellRangeAddress(groupStartRow + 1, groupStartRow + 2, 0, 2);
+
+			assertTrue(sheet.getMergedRegions().contains(singleRowRange));
+			assertTrue(sheet.getMergedRegions().contains(doubleRowRange));
 		}
 	}
 

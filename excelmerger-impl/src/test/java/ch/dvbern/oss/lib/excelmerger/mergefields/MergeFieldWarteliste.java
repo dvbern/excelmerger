@@ -12,16 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * limitations under the License.
  */
-package ch.dvbern.oss.lib.excelmerger;
+package ch.dvbern.oss.lib.excelmerger.mergefields;
 
 import javax.annotation.Nonnull;
-
-import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField;
-import ch.dvbern.oss.lib.excelmerger.mergefields.MergeFieldProvider;
-import ch.dvbern.oss.lib.excelmerger.mergefields.RepeatColMergeField;
-import ch.dvbern.oss.lib.excelmerger.mergefields.RepeatRowMergeField;
-import ch.dvbern.oss.lib.excelmerger.mergefields.RepeatValMergeField;
-import ch.dvbern.oss.lib.excelmerger.mergefields.SimpleMergeField;
 
 import static ch.dvbern.oss.lib.excelmerger.converters.StandardConverters.BIGDECIMAL_CONVERTER;
 import static ch.dvbern.oss.lib.excelmerger.converters.StandardConverters.BOOLEAN_X_CONVERTER;
