@@ -16,7 +16,7 @@ are replaced with dynamic values.
 ```xml
 <dependency>
 	<groupId>ch.dvbern.oss.excelmerger</groupId>
-	<artifactId>excelmerger</artifactId>
+	<artifactId>excelmerger-impl</artifactId>
 	<version>(NEWEST_VERSION)</version>
 </dependency>
 ```
