@@ -13,11 +13,11 @@
  * limitations under the License.
  */
 
-package ch.dvbern.oss.lib.excelmerger;
+package ch.dvbern.oss.lib.excelmerger.converters;
 
 import java.math.BigDecimal;
 
-import ch.dvbern.oss.lib.excelmerger.converters.StandardConverters;
+import ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;

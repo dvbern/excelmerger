@@ -1,3 +1,12 @@
+# 2.0.3 Helper to get all static MergeFields of a Class
+
+The typing suppport gets partially lost when using an Enum that implents MergeFieldProvider.
+The recommended method to declare MergeFields is to use a final Class with static MergeFields for each Excel template.
+
+The new helper method `MergeField.getStaticMergeFields(YourStaticClass.class)` can be used to get all these static
+MergeFields inorder to pass them to the ExcelMerger.
+# 2.0.2 no changes
+
 # 2.0.1 Naming conventions
 
 We dropped 'lib' in the `groupId` and `artifactId` name to comply with new naming conventions.
