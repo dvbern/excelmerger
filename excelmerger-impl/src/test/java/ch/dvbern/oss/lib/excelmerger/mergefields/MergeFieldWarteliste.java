@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * limitations under the License.
  */
-package ch.dvbern.oss.lib.excelmerger;
+package ch.dvbern.oss.lib.excelmerger.mergefields;
 
 import javax.annotation.Nonnull;
 
