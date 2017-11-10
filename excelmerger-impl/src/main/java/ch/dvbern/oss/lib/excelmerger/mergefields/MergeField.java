@@ -15,12 +15,40 @@
 package ch.dvbern.oss.lib.excelmerger.mergefields;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
 import ch.dvbern.oss.lib.excelmerger.converters.Converter;
 
 public interface MergeField<V> extends Serializable {
+
+	/**
+	 * Convenience method to get an (unmodifiable) list of all static MergeField instances of a class
+	 */
+	@Nonnull
+	static List<MergeField<?>> getStaticMergeFields(@Nonnull Class<?> clazz) {
+		return Arrays.stream(clazz.getDeclaredFields())
+			.filter(MergeField::isStaticMergeField)
+			.map(field -> {
+				try {
+					return (MergeField<?>) field.get(null);
+				} catch (IllegalAccessException e) {
+					throw new IllegalStateException("Error when performing reflection for MergeFields", e);
+				}
+			})
+			.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+	}
+
+	static boolean isStaticMergeField(@Nonnull Field field) {
+		return Modifier.isStatic(field.getModifiers()) && MergeField.class.isAssignableFrom(field.getType());
+	}
+
 	@Nonnull
 	String getKey();
 
