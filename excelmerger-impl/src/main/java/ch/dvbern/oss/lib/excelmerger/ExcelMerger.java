@@ -77,7 +77,8 @@ public final class ExcelMerger {
 	 * => Spalten-Repeater legen die anzahl sichtbarer Spalten (und ggf. defen Ueberschrift) fest und
 	 * Werte-Repeater sind die dazugehoerigen Daten die m.o.w. vollstaendig sind.
 	 */
-	public static void mergeData(@Nonnull Sheet sheet,
+	public static void mergeData(
+		@Nonnull Sheet sheet,
 		@Nonnull MergeField<?>[] fields,
 		@Nonnull ExcelMergerDTO excelMergerDTO) throws ExcelMergeException {
 		Objects.requireNonNull(sheet);
@@ -87,7 +88,8 @@ public final class ExcelMerger {
 		mergeData(sheet, Arrays.asList(fields), excelMergerDTO);
 	}
 
-	public static void mergeData(@Nonnull Sheet sheet,
+	public static void mergeData(
+		@Nonnull Sheet sheet,
 		@Nonnull List<MergeField<?>> fields,
 		@Nonnull ExcelMergerDTO excelMergerDTO) throws ExcelMergeException {
 		Objects.requireNonNull(sheet);
@@ -229,7 +231,8 @@ public final class ExcelMerger {
 		}
 	}
 
-	static void mergeGroup(@Nonnull Context ctx,
+	static void mergeGroup(
+		@Nonnull Context ctx,
 		@Nonnull GroupPlaceholder group,
 		@Nonnull ExcelMergerDTO dto,
 		@Nonnull Row currentRow,
@@ -245,7 +248,8 @@ public final class ExcelMerger {
 		}
 	}
 
-	static void mergeSubGroup(@Nonnull Context ctx,
+	static void mergeSubGroup(
+		@Nonnull Context ctx,
 		@Nonnull GroupPlaceholder group,
 		@Nonnull List<ExcelMergerDTO> subGroups,
 		@Nonnull Row currentRow) throws ExcelMergeException {
@@ -276,12 +280,7 @@ public final class ExcelMerger {
 
 		// Wenns nach dem zu duplizierenden Bereich noch Zeilen hat: nach unten wegschieben
 		if (anzRows > 0 && startNeuerBereich <= lastRow) {
-			if (isXSSFSheet) {
-				// bei XSSF werden die MergedRegions bei copyRow berücksichtigt, so dass wir hier nur shiften müssen
-				ctx.getSheet().shiftRows(startNeuerBereich, lastRow, anzRows);
-			} else {
-				shiftRowsAndMergedRegions(ctx.getSheet(), startNeuerBereich, lastRow, anzRows);
-			}
+			shiftRowsAndMergedRegions(ctx.getSheet(), startNeuerBereich, lastRow, anzRows);
 			// shiftRows does not shift DataValidations or NamedRanges. We have to shift them manually.
 			shiftDataValidations(ctx.getSheet(), startNeuerBereich, lastRow + anzRows, anzRows);
 			shiftNamedRanges(ctx.getSheet(), startRow.getRowNum(), lastRow, anzRows);

@@ -1,3 +1,7 @@
+# 2.0.4 Manually shiftRowsAndMergedRegions
+
+POI breaks merged regions using shiftRows
+
 # 2.0.3 Helper to get all static MergeFields of a Class
 
 The typing suppport gets partially lost when using an Enum that implents MergeFieldProvider.
