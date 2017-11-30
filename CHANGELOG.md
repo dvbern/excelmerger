@@ -1,3 +1,9 @@
+# 2.1.0 Handling large data sets
+
+Adding a RowFiller, to support writing huge data sets using SXSSF.
+
+See also [SXSSF HowTo](https://poi.apache.org/spreadsheet/how-to.html#sxssf)
+
 # 2.0.4 Manually shiftRowsAndMergedRegions
 
 POI breaks merged regions using shiftRows

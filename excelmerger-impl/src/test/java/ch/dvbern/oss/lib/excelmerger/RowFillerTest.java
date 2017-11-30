@@ -51,6 +51,9 @@ public class RowFillerTest {
 
 		assertEquals(initialNumberOfRows, xssfSheet.getPhysicalNumberOfRows());
 		assertEquals(0, rowFiller.getSheet().getPhysicalNumberOfRows());
+
+		// dispose of temporary files backing this workbook on disk
+		rowFiller.getSheet().getWorkbook().dispose();
 	}
 
 	@Test
@@ -66,6 +69,9 @@ public class RowFillerTest {
 
 		assertEquals(initialNumberOfRows, xssfSheet.getPhysicalNumberOfRows());
 		assertEquals(numberOfDataRows - 1, rowFiller.getSheet().getPhysicalNumberOfRows());
+
+		// dispose of temporary files backing this workbook on disk
+		rowFiller.getSheet().getWorkbook().dispose();
 	}
 
 	@Test
@@ -88,6 +94,9 @@ public class RowFillerTest {
 		assertEquals(initialNumberOfRows, xssfSheet.getPhysicalNumberOfRows());
 		assertEquals(2, rowFiller.getSheet().getPhysicalNumberOfRows());
 		assertEquals(expectedName, xssfSheet.getRow(0).getCell(1).getStringCellValue());
+
+		// dispose of temporary files backing this workbook on disk
+		rowFiller.getSheet().getWorkbook().dispose();
 	}
 
 	@Nonnull
@@ -101,7 +110,7 @@ public class RowFillerTest {
 
 	@Nonnull
 	private RowFiller executeTestRun(@Nonnull XSSFSheet sheet, int numberOfDataRows) {
-		RowFiller rowFiller = RowFiller.initStreamedRowFiller(sheet,
+		RowFiller rowFiller = RowFiller.initRowFiller(sheet,
 			Arrays.asList(VALUE_1, VALUE_2, REPEAT_ROW),
 			numberOfDataRows);
 

@@ -70,12 +70,11 @@ public class RowFiller {
 	 * (no evaluation over the whole sheet)</li>
 	 * </ul>
 	 *
-	 * <p>
-	 * Based on the provided MergeFields,
-	 * </p>Searches for the first RepeatRowMergeField to determine a source template row.
-	 * Initialises a RowFiller with a SXSSF Sheet.
-	 * All data rows that are written with the RowFiller will overwrite any existing rows.
-	 * Hence, the RowFiller should only be used when below it's source row no other merge fields are defined.
+	 * <p>All data rows that are written with the RowFiller will overwrite any existing rows.
+	 * Hence, the RowFiller should only be used when below it's source row no other merge fields are defined.</p>
+	 *
+	 * <p>All limitations of SXSSF apply. It is your responsibility to cleanup the temporary files by calling
+	 * {@code workbook.dispose();} after writing the workbook.</p>
 	 *
 	 * @param sheet the sheet you want to write to
 	 * @param fields should contain a {@link RepeatRowMergeField}, which is used to determine the source row,
@@ -83,9 +82,10 @@ public class RowFiller {
 	 * @param numberOfDataRows the number of data rows that will be filled. E.g. the number of
 	 * {@link RowFiller#fillRow(ExcelMergerDTO)} executions
 	 * @return a RowFiller, which can be used to write a single {@link ExcelMergerDTO} data row.
+	 * @see <a href="https://poi.apache.org/spreadsheet/how-to.html#sxssf">SXSSF HowTo</a>
 	 */
 	@Nonnull
-	public static RowFiller initStreamedRowFiller(
+	public static RowFiller initRowFiller(
 		@Nonnull XSSFSheet sheet,
 		@Nonnull List<MergeField<?>> fields,
 		int numberOfDataRows) {
