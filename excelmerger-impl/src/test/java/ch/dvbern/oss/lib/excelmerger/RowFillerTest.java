@@ -16,6 +16,7 @@
 package ch.dvbern.oss.lib.excelmerger;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.IntStream;
 
 import javax.annotation.Nonnull;
@@ -65,6 +66,28 @@ public class RowFillerTest {
 
 		assertEquals(initialNumberOfRows, xssfSheet.getPhysicalNumberOfRows());
 		assertEquals(numberOfDataRows - 1, rowFiller.getSheet().getPhysicalNumberOfRows());
+	}
+
+	@Test
+	public void testCombinationOfExcelMergerAndRowFiller() throws Exception {
+		XSSFSheet xssfSheet = init();
+		int initialNumberOfRows = xssfSheet.getPhysicalNumberOfRows();
+
+		int numberOfDataRows = 3;
+
+		SimpleMergeField<String> name = new SimpleMergeField<>("name", StandardConverters.STRING_CONVERTER);
+		ExcelMergerDTO base = new ExcelMergerDTO();
+		String expectedName = "This is my name";
+		base.addValue(name, expectedName);
+		ExcelMerger.mergeData(xssfSheet, Collections.singletonList(name), base);
+
+		RowFiller rowFiller = executeTestRun(xssfSheet, numberOfDataRows);
+
+		writeWorkbookToFile(rowFiller.getSheet().getWorkbook(), "sxssf-combined.xlsx");
+
+		assertEquals(initialNumberOfRows, xssfSheet.getPhysicalNumberOfRows());
+		assertEquals(2, rowFiller.getSheet().getPhysicalNumberOfRows());
+		assertEquals(expectedName, xssfSheet.getRow(0).getCell(1).getStringCellValue());
 	}
 
 	@Nonnull
