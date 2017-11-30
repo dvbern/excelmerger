@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField;
+import ch.dvbern.oss.lib.excelmerger.mergefields.RepeatRowMergeField;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellCopyPolicy;
 import org.apache.poi.ss.usermodel.CellType;
@@ -94,6 +95,11 @@ public class Context {
 	Optional<GroupPlaceholder> detectGroup() {
 		Row row = currentRow();
 
+		return detectGroup(row);
+	}
+
+	@Nonnull
+	Optional<GroupPlaceholder> detectGroup(@Nonnull Row row) {
 		// von hinten nach vorne durcharbeiten
 		for (int i = Math.max(row.getLastCellNum(), 0); i >= Math.max(row.getFirstCellNum(), 0); i--) {
 			Cell cell = row.getCell(i);
@@ -135,7 +141,8 @@ public class Context {
 		}
 
 		if (field.getType() == MergeField.Type.REPEAT_ROW) {
-			GroupPlaceholder groupPlaceholder = new GroupPlaceholder(cell, pattern, key, field, groupRows);
+			GroupPlaceholder groupPlaceholder =
+				new GroupPlaceholder(cell, pattern, key, (RepeatRowMergeField) field, groupRows);
 
 			return Optional.of(groupPlaceholder);
 		}
