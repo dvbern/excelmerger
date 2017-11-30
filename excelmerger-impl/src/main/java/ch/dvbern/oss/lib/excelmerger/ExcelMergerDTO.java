@@ -14,13 +14,10 @@
  */
 package ch.dvbern.oss.lib.excelmerger;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -55,27 +52,11 @@ public class ExcelMergerDTO {
 			group.getType() == Type.REPEAT_ROW,
 			"Not a REPEAT_ROW type %" + group.getType());
 
-		if (groups.containsKey(group)) {
-			groups.get(group).add(new ExcelMergerDTO());
-		} else {
-			List<ExcelMergerDTO> l = new LinkedList<>();
-			l.add(new ExcelMergerDTO());
-			groups.put(group, l);
-		}
-
 		List<ExcelMergerDTO> entries = groups.computeIfAbsent(group, key -> new LinkedList<>());
 		ExcelMergerDTO newGroup = new ExcelMergerDTO();
 		entries.add(newGroup);
 
 		return newGroup;
-	}
-
-	<V> void createGroup(@Nonnull MergeField<V> group, int numberOfEntries) {
-		List<ExcelMergerDTO> entries = groups.computeIfAbsent(group, key -> new ArrayList<>(numberOfEntries));
-
-		IntStream.range(0, numberOfEntries)
-			.mapToObj(i -> new ExcelMergerDTO())
-			.collect(Collectors.toCollection(() -> entries));
 	}
 
 	public <V> void addValue(@Nonnull MergeFieldProvider provider, @Nullable V value) {
