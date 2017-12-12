@@ -24,4 +24,8 @@ public class ExcelMergeRuntimeException extends RuntimeException {
 	public ExcelMergeRuntimeException(@Nonnull String message, @Nonnull Throwable throwable) {
 		super(message, throwable);
 	}
+
+	public ExcelMergeRuntimeException(@Nonnull String message) {
+		super(message);
+	}
 }

@@ -18,7 +18,7 @@ package ch.dvbern.oss.lib.excelmerger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField;
+import ch.dvbern.oss.lib.excelmerger.mergefields.RepeatRowMergeField;
 import com.google.common.base.MoreObjects;
 import org.apache.poi.ss.usermodel.Cell;
 
@@ -30,7 +30,7 @@ class GroupPlaceholder extends Placeholder {
 		@Nonnull Cell cell,
 		@Nonnull String pattern,
 		@Nonnull String key,
-		@Nonnull MergeField<?> field,
+		@Nonnull RepeatRowMergeField field,
 		@Nullable Integer rowsParsed) {
 
 		super(cell, pattern, key, field);
@@ -39,6 +39,19 @@ class GroupPlaceholder extends Placeholder {
 
 	public int getRows() {
 		return rows;
+	}
+
+	@Nonnull
+	@Override
+	public RepeatRowMergeField getField() {
+		return (RepeatRowMergeField) super.getField();
+	}
+
+	/**
+	 * Group-Repeat-Info aus der Zelle loeschen
+	 */
+	public void clearPlaceholder() {
+		getCell().setCellValue((String) null);
 	}
 
 	@Override

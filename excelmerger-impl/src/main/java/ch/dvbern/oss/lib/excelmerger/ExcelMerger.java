@@ -32,6 +32,7 @@ import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 
 import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField;
+import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField.Type;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -59,6 +60,8 @@ public final class ExcelMerger {
 	static final int REF_GROUP_ROWS = 4;
 	// nur ein willkuerlicher Counter, damit's kein while(true) geben muss
 	private static final int MAX_PLACEHOLDERS_PER_CELL = 10;
+	static final Pattern SAME_ROW_CELL_REF = Pattern.compile(
+		"(?:\\b)([a-zA-Z]+)[0-9]+\\b(?!\\()(?=(?:[^\"']*[\"'][^\"']*[\"'])*[^\"']*$)");
 
 	private ExcelMerger() {
 		// utliity class
@@ -67,9 +70,9 @@ public final class ExcelMerger {
 	/**
 	 * Fuellt ein Excel-Sheet mit den uebergebenen Daten aus.
 	 * Das Sheet wird in Repeat-Gruppen aufgeteilt, die auch verschachtelt sein koennen.
-	 * Repeat-Gruppen-Bezeichner ('z.B. {myRepeat}') muessen ein Feld vom Typ {@link MergeField.Type#REPEAT_ROW} sein.
-	 * Normale Felder - (also 1 Wert pro Repeat-Gruppe) sind vom Typ {@link MergeField.Type#SIMPLE}.
-	 * Spalten-Repeater sind vom Typ {@link MergeField.Type#REPEAT_COL}.
+	 * Repeat-Gruppen-Bezeichner ('z.B. {myRepeat}') muessen ein Feld vom Typ {@link Type#REPEAT_ROW} sein.
+	 * Normale Felder - (also 1 Wert pro Repeat-Gruppe) sind vom Typ {@link Type#SIMPLE}.
+	 * Spalten-Repeater sind vom Typ {@link Type#REPEAT_COL}.
 	 * Findet sich in den Daten nicht ausreichend Werte, werden die Spalten ausgeblendet.
 	 * Nuetzlich z.B. in Ueberschriften.
 	 * Werte-Repeater gehoeren zu Spalten-Repeater und sind die Daten zur Ueberschrift.
@@ -149,14 +152,13 @@ public final class ExcelMerger {
 		return new ByteArrayInputStream(baos.toByteArray());
 	}
 
-	private static void mergeRow(@Nonnull Context ctx, @Nonnull ExcelMergerDTO data) {
+	static void mergeRow(@Nonnull Context ctx, @Nonnull ExcelMergerDTO data, @Nonnull Row targetRow) {
 		Map<MergeField<?>, Integer> valueOffsets = new HashMap<>();
-		Row row = ctx.currentRow();
-		int start = Math.max(row.getFirstCellNum(), 0);
-		int end = Math.max(row.getLastCellNum(), 0);
+		int start = Math.max(targetRow.getFirstCellNum(), 0);
+		int end = Math.max(targetRow.getLastCellNum(), 0);
 
 		IntStream.rangeClosed(start, end)
-			.mapToObj(row::getCell)
+			.mapToObj(targetRow::getCell)
 			.filter(Objects::nonNull)
 			.forEach(cell -> mergePlaceholders(ctx, data, valueOffsets, cell));
 	}
@@ -164,7 +166,8 @@ public final class ExcelMerger {
 	private static void mergePlaceholders(
 		@Nonnull Context ctx,
 		@Nonnull ExcelMergerDTO data,
-		@Nonnull Map<MergeField<?>, Integer> valueOffsets, @Nonnull Cell cell) {
+		@Nonnull Map<MergeField<?>, Integer> valueOffsets,
+		@Nonnull Cell cell) {
 
 		for (int i = 0; i < MAX_PLACEHOLDERS_PER_CELL; i++) {
 			Optional<Placeholder> placeholderOpt = ctx.parsePlaceholder(cell);
@@ -175,7 +178,7 @@ public final class ExcelMerger {
 			MergeField<?> field = placeholderOpt.get().getField();
 			String pattern = placeholderOpt.get().getPattern();
 
-			if (MergeField.Type.PAGE_BREAK == field.getType()) {
+			if (Type.PAGE_BREAK == field.getType()) {
 				int rowNum = cell.getRow().getRowNum();
 				field.getConverter().setCellValue(cell, pattern, null);
 				ctx.getSheet().setRowBreak(rowNum);
@@ -218,7 +221,7 @@ public final class ExcelMerger {
 					if (group.isPresent()) {
 						mergeGroup(ctx, group.get(), dto, row, ExcelMerger::mergeSubGroup);
 					} else {
-						mergeRow(ctx, dto);
+						mergeRow(ctx, dto, ctx.currentRow());
 						ctx.advanceRow();
 					}
 				} catch (RuntimeException rte) {
@@ -239,9 +242,9 @@ public final class ExcelMerger {
 		@Nonnull GroupMerger merger) throws ExcelMergeException {
 
 		List<ExcelMergerDTO> subGroups = dto.getGroup(group.getField());
-		group.getCell().setCellValue((String) null); // Group-Repeat-Info aus der Zelle loeschen
+		group.clearPlaceholder();
 		if (subGroups == null) {
-			mergeRow(ctx, dto);
+			mergeRow(ctx, dto, ctx.currentRow());
 			ctx.advanceRow();
 		} else {
 			merger.accept(ctx, group, subGroups, currentRow);
@@ -324,13 +327,6 @@ public final class ExcelMerger {
 
 	}
 
-	/**
-	 * Issues
-	 * <ul>
-	 * <li>Does not shift formula references</li>
-	 * ExcelMergerDTO<li>Does not copy merged cells</li>
-	 * </ul>
-	 */
 	private static void copyRows(
 		@Nonnull Context ctx,
 		@Nonnull Row startRow,
@@ -345,45 +341,61 @@ public final class ExcelMerger {
 				int startGroup = startNeuerBereich + i * anzSrcRows;
 				Row newRow = getRow(ctx.getSheet(), startGroup + rowNum);
 
-				copyStyles(srcRow, newRow);
+				copyCells(srcRow, newRow);
 			}
 		}
-
 	}
 
-	private static void copyStyles(@Nonnull Row srcRow, @Nonnull Row newRow) {
-		for (int cellNum = 0; cellNum < srcRow.getLastCellNum(); cellNum++) {
-			Cell srcCell = srcRow.getCell(cellNum);
-			if (srcCell != null) {
-				Cell newCell = getCell(newRow, cellNum);
-				newCell.setCellStyle(srcCell.getCellStyle());
-				switch (srcCell.getCellTypeEnum()) {
-				case STRING:
-					newCell.setCellValue(srcCell.getStringCellValue());
-					break;
-				case FORMULA:
-					newCell.setCellFormula(srcCell.getCellFormula());
-					break;
-				case BLANK:
-					// nop
-					break;
-				default:
-					LOG.warn("Cell type not supported: {} @{}/{}", srcCell.getCellTypeEnum(), srcCell.getRowIndex(),
-						srcCell.getColumnIndex());
-				}
-			}
+	/**
+	 * Issues
+	 * <ul>
+	 * <li>Does not shift formula references</li>
+	 * <li>Does not copy merged cells</li>
+	 * </ul>
+	 */
+	static void copyCells(@Nonnull Row srcRow, @Nonnull Row newRow) {
+		IntStream.range(0, srcRow.getLastCellNum())
+			.mapToObj(srcRow::getCell)
+			.filter(Objects::nonNull)
+			.forEach(srcCell -> copyCell(newRow, srcCell));
+	}
+
+	private static void copyCell(@Nonnull Row newRow, @Nonnull Cell srcCell) {
+		Cell newCell = getCell(newRow, srcCell.getAddress().getColumn());
+		newCell.setCellStyle(srcCell.getCellStyle());
+
+		switch (srcCell.getCellTypeEnum()) {
+		case STRING:
+			newCell.setCellValue(srcCell.getStringCellValue());
+			break;
+		case NUMERIC:
+			newCell.setCellValue(srcCell.getNumericCellValue());
+			break;
+		case FORMULA:
+			String cellFormula = srcCell.getCellFormula();
+			String s = SAME_ROW_CELL_REF.matcher(cellFormula).replaceAll("$1" + newRow.getRowNum());
+			newCell.setCellFormula(s);
+			break;
+		case BLANK:
+			// nop
+			break;
+		default:
+			LOG.warn("Cell type not supported: {} @{}/{}", srcCell.getCellTypeEnum(), srcCell.getRowIndex(),
+				srcCell.getColumnIndex());
 		}
 	}
 
 	@Nonnull
 	private static Row getRow(@Nonnull Sheet sheet, int index) {
 		Row row = sheet.getRow(index);
+
 		return row == null ? sheet.createRow(index) : row;
 	}
 
 	@Nonnull
 	private static Cell getCell(@Nonnull Row row, int column) {
 		Cell cell = row.getCell(column);
+
 		return cell == null ? row.createCell(column) : cell;
 	}
 

@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField;
 import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField.Type;
 import ch.dvbern.oss.lib.excelmerger.mergefields.MergeFieldProvider;
+import ch.dvbern.oss.lib.excelmerger.mergefields.RepeatRowMergeField;
 import com.google.common.base.Preconditions;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -47,7 +48,8 @@ public class ExcelMergerDTO {
 	public <V> ExcelMergerDTO createGroup(@Nonnull MergeField<V> group) {
 		checkNotNull(group);
 
-		Preconditions.checkArgument(group.getType() == Type.REPEAT_ROW,
+		Preconditions.checkArgument(
+			group.getType() == Type.REPEAT_ROW,
 			"Not a REPEAT_ROW type %" + group.getType());
 
 		List<ExcelMergerDTO> entries = groups.computeIfAbsent(group, key -> new LinkedList<>());
@@ -69,7 +71,7 @@ public class ExcelMergerDTO {
 	}
 
 	@Nullable
-	public <V> List<ExcelMergerDTO> getGroup(@Nonnull MergeField<V> groupField) {
+	public List<ExcelMergerDTO> getGroup(@Nonnull RepeatRowMergeField groupField) {
 		return groups.get(groupField);
 	}
 
