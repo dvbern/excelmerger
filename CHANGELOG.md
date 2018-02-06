@@ -1,3 +1,8 @@
+# 2.1.1 Formula reference fix
+
+When using RowFiller, each copied row contained formular references to the row above instead of a reference to the 
+row itself.
+
 # 2.1.0 Handling large data sets
 
 Adding a RowFiller, to support writing huge data sets using SXSSF.
