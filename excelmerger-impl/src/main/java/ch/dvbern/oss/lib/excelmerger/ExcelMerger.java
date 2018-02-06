@@ -373,7 +373,7 @@ public final class ExcelMerger {
 			break;
 		case FORMULA:
 			String cellFormula = srcCell.getCellFormula();
-			String s = SAME_ROW_CELL_REF.matcher(cellFormula).replaceAll("$1" + newRow.getRowNum());
+			String s = SAME_ROW_CELL_REF.matcher(cellFormula).replaceAll("$1" + (newRow.getRowNum() + 1));
 			newCell.setCellFormula(s);
 			break;
 		case BLANK:

@@ -87,9 +87,13 @@ public final class ExcelMergerTestUtil {
 		cell.setCellStyle(cellStyle);
 	}
 
-	public static void writeWorkbookToFile(@Nonnull Workbook wb, @Nonnull String sheetName) throws IOException {
-		try (OutputStream out = new FileOutputStream("target/" + sheetName)) {
+	@Nonnull
+	public static String writeWorkbookToFile(@Nonnull Workbook wb, @Nonnull String sheetName) throws IOException {
+		String name = "target/" + sheetName;
+		try (OutputStream out = new FileOutputStream(name)) {
 			wb.write(out);
 		}
+
+		return name;
 	}
 }

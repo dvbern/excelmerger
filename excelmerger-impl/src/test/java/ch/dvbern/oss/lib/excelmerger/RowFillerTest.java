@@ -15,6 +15,7 @@
 
 package ch.dvbern.oss.lib.excelmerger;
 
+import java.io.FileInputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.IntStream;
@@ -25,6 +26,9 @@ import ch.dvbern.oss.lib.excelmerger.converters.StandardConverters;
 import ch.dvbern.oss.lib.excelmerger.mergefields.RepeatRowMergeField;
 import ch.dvbern.oss.lib.excelmerger.mergefields.SimpleMergeField;
 import org.apache.poi.ss.SpreadsheetVersion;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
@@ -41,7 +45,7 @@ public class RowFillerTest {
 	private static final RepeatRowMergeField REPEAT_ROW = new RepeatRowMergeField("row");
 
 	@Test
-	public void testSingleRow() throws Exception {
+	public void testSingleRow() {
 		XSSFSheet xssfSheet = init();
 		int initialNumberOfRows = xssfSheet.getPhysicalNumberOfRows();
 
@@ -89,7 +93,7 @@ public class RowFillerTest {
 
 		RowFiller rowFiller = executeTestRun(xssfSheet, numberOfDataRows);
 
-		writeWorkbookToFile(rowFiller.getSheet().getWorkbook(), "sxssf-combined.xlsx");
+		String file = writeWorkbookToFile(rowFiller.getSheet().getWorkbook(), "sxssf-combined.xlsx");
 
 		assertEquals(initialNumberOfRows, xssfSheet.getPhysicalNumberOfRows());
 		assertEquals(2, rowFiller.getSheet().getPhysicalNumberOfRows());
@@ -97,6 +101,18 @@ public class RowFillerTest {
 
 		// dispose of temporary files backing this workbook on disk
 		rowFiller.getSheet().getWorkbook().dispose();
+
+		Workbook workbookFromTemplate = ExcelMerger.createWorkbookFromTemplate(new FileInputStream(file));
+		Sheet filledSheet = workbookFromTemplate.getSheetAt(0);
+
+		// Verify formula shifting
+		IntStream.rangeClosed(3, 5)
+			.forEach(i -> {
+				Row row = filledSheet.getRow(i - 1);
+
+				assertEquals(String.format("A%1$d+B%1$d", i), row.getCell(2).getCellFormula());
+				assertEquals(String.format("3*B%1$d", i), row.getCell(5).getCellFormula());
+			});
 	}
 
 	@Nonnull
@@ -110,7 +126,8 @@ public class RowFillerTest {
 
 	@Nonnull
 	private RowFiller executeTestRun(@Nonnull XSSFSheet sheet, int numberOfDataRows) {
-		RowFiller rowFiller = RowFiller.initRowFiller(sheet,
+		RowFiller rowFiller = RowFiller.initRowFiller(
+			sheet,
 			Arrays.asList(VALUE_1, VALUE_2, REPEAT_ROW),
 			numberOfDataRows);
 
