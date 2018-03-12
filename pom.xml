@@ -23,7 +23,7 @@
     <parent>
         <groupId>ch.dvbern.oss.maven</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.5</version>
     </parent>
 
     <groupId>ch.dvbern.oss.excelmerger</groupId>
@@ -37,6 +37,8 @@
     </properties>
 
     <name>DVBern ExcelMerger</name>
+    <description>This Java library can be used to generate Excel-Reports using templates</description>
+    <url>http://github.com/dvbern/excelmerger</url>
 
     <build>
         <plugins>
@@ -146,4 +148,20 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <developers>
+        <developer>
+            <name>DV Bern AG developers</name>
+            <email>hallo@dvbern.ch</email>
+            <organization>DV Bern AG</organization>
+            <organizationUrl>http://www.dvbern.ch</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/dvbern/excelmerger.git</connection>
+        <developerConnection>scm:git:ssh://github.com:dvbern/excelmerger.git</developerConnection>
+        <url>http://github.com/dvbern/excelmerger/tree/master</url>
+    </scm>
+
 </project>
