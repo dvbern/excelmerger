@@ -161,7 +161,7 @@
     <scm>
         <connection>scm:git:git://github.com/dvbern/excelmerger.git</connection>
         <developerConnection>scm:git:ssh://github.com:dvbern/excelmerger.git</developerConnection>
-        <url>http://github.com/dvbern/excelmerger/tree/master</url>
+        <url>http://github.com/dvbern/excelmerger</url>
     </scm>
 
 </project>
