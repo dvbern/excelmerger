@@ -86,6 +86,16 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <configuration>
+                        <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+                        <bundleAuditAnalyzerEnabled>false</bundleAuditAnalyzerEnabled>
+                        <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                        <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
