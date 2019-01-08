@@ -134,17 +134,23 @@ public enum MergeFieldBelegungsplan implements MergeFieldProvider {
 	MAXPLAETZEKITASONNTAG(new RepeatValMergeField<>("maxPlaetzeKitaSonntag", LONG_CONVERTER)),
 
 	MAXBEWILLIGTEPLAETZEKITAMONTAG(new RepeatValMergeField<>("maxBewilligtePlaetzeKitaMontag", BIGDECIMAL_CONVERTER)),
-	MAXBEWILLIGTEPLAETZEKITADIENSTAG(new RepeatValMergeField<>("maxBewilligtePlaetzeKitaDienstag",
+	MAXBEWILLIGTEPLAETZEKITADIENSTAG(new RepeatValMergeField<>(
+		"maxBewilligtePlaetzeKitaDienstag",
 		BIGDECIMAL_CONVERTER)),
-	MAXBEWILLIGTEPLAETZEKITAMITTWOCH(new RepeatValMergeField<>("maxBewilligtePlaetzeKitaMittwoch",
+	MAXBEWILLIGTEPLAETZEKITAMITTWOCH(new RepeatValMergeField<>(
+		"maxBewilligtePlaetzeKitaMittwoch",
 		BIGDECIMAL_CONVERTER)),
-	MAXBEWILLIGTEPLAETZEKITADONNERSTAG(new RepeatValMergeField<>("maxBewilligtePlaetzeKitaDonnerstag",
+	MAXBEWILLIGTEPLAETZEKITADONNERSTAG(new RepeatValMergeField<>(
+		"maxBewilligtePlaetzeKitaDonnerstag",
 		BIGDECIMAL_CONVERTER)),
-	MAXBEWILLIGTEPLAETZEKITAFREITAG(new RepeatValMergeField<>("maxBewilligtePlaetzeKitaFreitag",
+	MAXBEWILLIGTEPLAETZEKITAFREITAG(new RepeatValMergeField<>(
+		"maxBewilligtePlaetzeKitaFreitag",
 		BIGDECIMAL_CONVERTER)),
-	MAXBEWILLIGTEPLAETZEKITASAMSTAG(new RepeatValMergeField<>("maxBewilligtePlaetzeKitaSamstag",
+	MAXBEWILLIGTEPLAETZEKITASAMSTAG(new RepeatValMergeField<>(
+		"maxBewilligtePlaetzeKitaSamstag",
 		BIGDECIMAL_CONVERTER)),
-	MAXBEWILLIGTEPLAETZEKITASONNTAG(new RepeatValMergeField<>("maxBewilligtePlaetzeKitaSonntag",
+	MAXBEWILLIGTEPLAETZEKITASONNTAG(new RepeatValMergeField<>(
+		"maxBewilligtePlaetzeKitaSonntag",
 		BIGDECIMAL_CONVERTER)),
 
 	belegungKitaBelegung(new SimpleMergeField<>("belegungKitaBelegung", BIGDECIMAL_CONVERTER)),
