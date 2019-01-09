@@ -42,6 +42,7 @@ import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.SCALE;
 import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.writeLocalDate;
 import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.writerNumber;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public final class StandardConverters {
 
 	public static final Converter<String> STRING_CONVERTER =

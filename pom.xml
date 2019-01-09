@@ -23,20 +23,22 @@
     <parent>
         <groupId>ch.dvbern.oss.maven</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.4</version>
+        <version>1.2.1</version>
     </parent>
 
     <groupId>ch.dvbern.oss.excelmerger</groupId>
     <artifactId>excelmerger</artifactId>
-    <version>2.1.1</version>
+    <version>2.2.0</version>
     <packaging>pom</packaging>
 
     <properties>
-        <slf4j.version>1.7.22</slf4j.version>
-        <poi.version>3.16</poi.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <poi.version>4.0.1</poi.version>
     </properties>
 
     <name>DVBern ExcelMerger</name>
+    <description>This Java library can be used to generate Excel-Reports using templates</description>
+    <url>http://github.com/dvbern/excelmerger</url>
 
     <build>
         <plugins>
@@ -49,8 +51,8 @@
                 <artifactId>maven-pmd-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
             </plugin>
         </plugins>
 
@@ -84,6 +86,16 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <configuration>
+                        <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+                        <bundleAuditAnalyzerEnabled>false</bundleAuditAnalyzerEnabled>
+                        <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                        <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -97,11 +109,23 @@
                 <artifactId>excelmerger-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>net.jcip</groupId>
+                <artifactId>jcip-annotations</artifactId>
+                <version>1.0</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-annotations</artifactId>
+                <version>3.1.10</version>
+                <optional>true</optional>
+            </dependency>
             <dependency>
                 <groupId>com.google.code.findbugs</groupId>
-                <artifactId>annotations</artifactId>
-                <version>3.0.0</version>
+                <artifactId>jsr305</artifactId>
+                <version>3.0.2</version>
+                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -116,12 +140,12 @@
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>2.4</version>
+                <version>2.6</version>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>19.0.20150826</version>
+                <version>27.0.1-jre</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
@@ -132,12 +156,6 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
                 <version>${poi.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>dom4j</artifactId>
-                        <groupId>dom4j</groupId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -146,4 +164,20 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <developers>
+        <developer>
+            <name>DV Bern AG developers</name>
+            <email>hallo@dvbern.ch</email>
+            <organization>DV Bern AG</organization>
+            <organizationUrl>http://www.dvbern.ch</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/dvbern/excelmerger.git</connection>
+        <developerConnection>scm:git:ssh://github.com:dvbern/excelmerger.git</developerConnection>
+        <url>http://github.com/dvbern/excelmerger</url>
+    </scm>
+
 </project>
