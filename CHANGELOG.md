@@ -1,6 +1,6 @@
 # 2.2.0 Dependency update
 
-Updated dependencies (e.g. Apache POI 4.0.1) and switchted from Findbugs to Spotbugs.
+Updated dependencies (e.g. Apache POI 4.0.1) and switched from Findbugs to Spotbugs.
 
 # 2.1.1 Formula reference fix
 
