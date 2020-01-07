@@ -31,6 +31,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellReference;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public final class ExcelMergerTestUtil {
 
 	private ExcelMergerTestUtil() {
@@ -45,7 +47,7 @@ public final class ExcelMergerTestUtil {
 	static final Function<String, Workbook> GET_WORKBOOK = (name) -> {
 		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
 
-		return ExcelMerger.createWorkbookFromTemplate(is);
+		return ExcelMerger.createWorkbookFromTemplate(checkNotNull(is));
 	};
 
 	@Nonnull
