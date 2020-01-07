@@ -31,8 +31,8 @@ public interface Converter<V> extends Serializable {
 			setCellValueImpl(cell, pattern, (V) o);
 		} catch (RuntimeException rte) {
 			// Dient nur zum Debugging, damit der Entwickler an row und column rankommt
-			String format = "Error converting data on cell %d/%d with pattern %s on object %s";
-			String msg = String.format(format, cell.getRowIndex(), cell.getColumnIndex(), pattern, o);
+			String format = "Error converting data on cell %s with pattern %s on object %s";
+			String msg = String.format(format, cell.getAddress().formatAsString(), pattern, o);
 			throw new ExcelMergeRuntimeException(msg, rte); // NOPMD.PreserveStackTrace
 		}
 	}

@@ -23,17 +23,17 @@
     <parent>
         <groupId>ch.dvbern.oss.maven</groupId>
         <artifactId>parent</artifactId>
-        <version>1.2.1</version>
+        <version>2.0.0</version>
     </parent>
 
     <groupId>ch.dvbern.oss.excelmerger</groupId>
     <artifactId>excelmerger</artifactId>
-    <version>2.2.0</version>
+    <version>2.2.1</version>
     <packaging>pom</packaging>
 
     <properties>
-        <slf4j.version>1.7.25</slf4j.version>
-        <poi.version>4.0.1</poi.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <poi.version>4.1.1</poi.version>
     </properties>
 
     <name>DVBern ExcelMerger</name>
@@ -118,7 +118,7 @@
             <dependency>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-annotations</artifactId>
-                <version>3.1.10</version>
+                <version>3.1.12</version>
                 <optional>true</optional>
             </dependency>
             <dependency>
@@ -145,7 +145,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>27.0.1-jre</version>
+                <version>28.2-jre</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
@@ -160,7 +160,12 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.12</version>
+                <version>4.13</version>
+            </dependency>
+            <dependency>
+                <groupId>org.easymock</groupId>
+                <artifactId>easymock</artifactId>
+                <version>4.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
