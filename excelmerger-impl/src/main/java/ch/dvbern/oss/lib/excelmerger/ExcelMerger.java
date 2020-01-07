@@ -53,7 +53,7 @@ public final class ExcelMerger {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ExcelMerger.class);
 
-	static final Pattern MERGEFIELD_REX = Pattern.compile(".*(\\{([a-zA-Z1-9_]+)(:(\\d))?}).*");
+	static final Pattern MERGEFIELD_REX = Pattern.compile(".*(\\{([a-zA-Z1-9_]+)(:(\\d*))?}).*");
 	static final int REX_GROUP_PATTERN = 1;
 	static final int REX_GROUP_KEY = 2;
 	static final int REF_GROUP_ROWS = 4;
