@@ -16,6 +16,8 @@ package ch.dvbern.oss.lib.excelmerger.mergefields;
 
 import javax.annotation.Nonnull;
 
+import ch.dvbern.oss.lib.excelmerger.converters.Converter;
+
 import static ch.dvbern.oss.lib.excelmerger.converters.StandardConverters.DO_NOTHING_CONVERTER;
 
 public class RepeatRowMergeField extends DefaultMergeField<String> {
@@ -24,5 +26,9 @@ public class RepeatRowMergeField extends DefaultMergeField<String> {
 
 	public RepeatRowMergeField(@Nonnull String key) {
 		super(key, Type.REPEAT_ROW, DO_NOTHING_CONVERTER);
+	}
+
+	public RepeatRowMergeField(@Nonnull String key, Converter<String> converter) {
+		super(key, Type.REPEAT_ROW, converter);
 	}
 }
