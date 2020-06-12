@@ -34,6 +34,7 @@ import javax.annotation.Nonnull;
 import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField;
 import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField.Type;
 import org.apache.commons.io.IOUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
@@ -127,7 +128,7 @@ public final class ExcelMerger {
 			// POI braucht einen Seekable InputStream
 			return WorkbookFactory.create(poiCompatibleIS);
 
-		} catch (IOException | RuntimeException e) {
+		} catch (IOException | RuntimeException | InvalidFormatException e) {
 			throw new ExcelTemplateParseException("Error parsing template", e);
 		}
 	}
@@ -363,7 +364,7 @@ public final class ExcelMerger {
 		Cell newCell = getCell(newRow, srcCell.getAddress().getColumn());
 		newCell.setCellStyle(srcCell.getCellStyle());
 
-		switch (srcCell.getCellType()) {
+		switch (srcCell.getCellTypeEnum()) {
 		case STRING:
 			newCell.setCellValue(srcCell.getStringCellValue());
 			break;
@@ -380,7 +381,7 @@ public final class ExcelMerger {
 			// nop
 			break;
 		default:
-			LOG.warn("Cell type not supported: {} @{}/{}", srcCell.getCellType(), srcCell.getRowIndex(),
+			LOG.warn("Cell type not supported: {} @{}/{}", srcCell.getCellTypeEnum(), srcCell.getRowIndex(),
 				srcCell.getColumnIndex());
 		}
 	}
