@@ -177,8 +177,12 @@ public final class StandardConverters {
 	 *
 	 * Does not work with LibreOffice: the rows are using standard height.
 	 */
-	public static final Converter<String> AUTO_HEIGHT_CONVERTER =
-		(@Nonnull Cell cell, @Nonnull String pattern, @Nullable String value) -> cell.getRow().setHeight((short) -1);
+	public static <V> Converter<V> autoHeightConverter(Converter<V> valueConverter) {
+		return (@Nonnull Cell cell, @Nonnull String pattern, @Nullable V value) -> {
+			cell.getRow().setHeight((short) -1);
+			valueConverter.setCellValue(cell, pattern, value);
+		};
+	}
 
 	public static final Converter<String> DO_NOTHING_CONVERTER =
 		(@Nonnull Cell cell, @Nonnull String pattern, @Nullable String value) -> {

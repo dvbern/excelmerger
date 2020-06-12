@@ -18,8 +18,9 @@ package ch.dvbern.oss.lib.excelmerger;
 import java.io.IOException;
 import java.util.Arrays;
 
+import ch.dvbern.oss.lib.excelmerger.converters.Converter;
 import ch.dvbern.oss.lib.excelmerger.converters.StandardConverters;
-import ch.dvbern.oss.lib.excelmerger.mergefields.RepeatRowAutoHeightMergeField;
+import ch.dvbern.oss.lib.excelmerger.mergefields.RepeatRowMergeField;
 import ch.dvbern.oss.lib.excelmerger.mergefields.SimpleMergeField;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -35,8 +36,10 @@ public class RepeatRowAuthHeightTest {
 		String filename = "repeatRowAutoHeight.xlsx";
 		Workbook wb = ExcelMergerTestUtil.GET_WORKBOOK.apply(ExcelMergerTestUtil.BASE + filename);
 
-		RepeatRowAutoHeightMergeField repeatRowField = new RepeatRowAutoHeightMergeField("repeatRow");
-		SimpleMergeField<String> value = new SimpleMergeField<>("someValue", StandardConverters.STRING_CONVERTER);
+		RepeatRowMergeField repeatRowField = new RepeatRowMergeField("repeatRow");
+		Converter<String> autoHeightConverter =
+			StandardConverters.autoHeightConverter(StandardConverters.STRING_CONVERTER);
+		SimpleMergeField<String> value = new SimpleMergeField<>("someValue", autoHeightConverter);
 
 		ExcelMergerDTO dto = new ExcelMergerDTO();
 		StringBuilder repeatedText = new StringBuilder("I will do my homework.");
