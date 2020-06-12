@@ -16,14 +16,11 @@ package ch.dvbern.oss.lib.excelmerger.mergefields;
 
 import javax.annotation.Nonnull;
 
-import ch.dvbern.oss.lib.excelmerger.converters.Converter;
 import ch.dvbern.oss.lib.excelmerger.converters.StandardConverters;
 
-import static ch.dvbern.oss.lib.excelmerger.converters.StandardConverters.DO_NOTHING_CONVERTER;
+public class RepeatRowAutoHeightMergeField extends RepeatRowMergeField {
 
-public class RepeatRowAuthHeightMergeField extends RepeatRowMergeField {
-
-	public RepeatRowAuthHeightMergeField(@Nonnull String key) {
+	public RepeatRowAutoHeightMergeField(@Nonnull String key) {
       super(key, StandardConverters.AUTO_HEIGHT_CONVERTER);
    }
 }
