@@ -169,6 +169,13 @@ public final class StandardConverters {
 			}
 		};
 
+	/**
+	 * Uses a hack, to make Excel automatically adjust row heights (sets row height to -1).
+	 * <a href="https://stackoverflow.com/a/35789927">https://stackoverflow.com/a/35789927</a>
+	 */
+	public static final Converter<String> AUTO_HEIGHT_CONVERTER =
+		(@Nonnull Cell cell, @Nonnull String pattern, @Nullable String value) -> cell.getRow().setHeight((short) -1);
+
 	public static final Converter<String> DO_NOTHING_CONVERTER =
 		(@Nonnull Cell cell, @Nonnull String pattern, @Nullable String value) -> {
 			// nop
