@@ -34,7 +34,6 @@ import javax.annotation.Nonnull;
 import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField;
 import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField.Type;
 import org.apache.commons.io.IOUtils;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
@@ -128,7 +127,7 @@ public final class ExcelMerger {
 			// POI braucht einen Seekable InputStream
 			return WorkbookFactory.create(poiCompatibleIS);
 
-		} catch (IOException | RuntimeException | InvalidFormatException e) {
+		} catch (IOException | RuntimeException e) {
 			throw new ExcelTemplateParseException("Error parsing template", e);
 		}
 	}
