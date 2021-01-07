@@ -26,7 +26,7 @@ import ch.dvbern.oss.lib.excelmerger.mergefields.MergeFieldWarteliste;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil.BELEGUNGSPLAN;
 import static ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil.GET_WORKBOOK;
@@ -36,10 +36,10 @@ import static ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil.getVal;
 import static ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil.named;
 import static ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil.writeWorkbookToFile;
 import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.DEFAULT_DATE_FORMAT;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExcelMergerTest {
 
@@ -161,7 +161,7 @@ public class ExcelMergerTest {
 	}
 
 	@Test
-	public void testBelegungsplan() throws IOException, InvalidFormatException, ExcelMergeException {
+	public void testBelegungsplan() throws IOException, ExcelMergeException {
 		Workbook wb = GET_WORKBOOK.apply(BELEGUNGSPLAN);
 
 		LocalDate stichtag = LocalDate.now();

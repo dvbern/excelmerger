@@ -30,15 +30,15 @@ import ch.dvbern.oss.lib.excelmerger.mergefields.MergeFieldWarteliste;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil.BELEGUNGSPLAN;
 import static ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil.GET_WORKBOOK;
 import static ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil.WARTELISTE;
 import static ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil.getVal;
 import static ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil.writeWorkbookToFile;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("JUnitTestMethodWithNoAssertions")
 public class ExcelMergerMergeGroupTest {
@@ -105,7 +105,7 @@ public class ExcelMergerMergeGroupTest {
 				numRowsTotal++;
 			}
 
-			assertEquals("Should not add too many rows", numRowsTotal, getSheet().getLastRowNum() + 1);
+			assertEquals(numRowsTotal, getSheet().getLastRowNum() + 1, "Should not add too many rows");
 			for (int i = 1; i <= getNumRowsTest(); i++) {
 				assertEquals("Gates", getVal(getSheet(), getNumRowsBefore() + i, "L"));
 			}
@@ -137,7 +137,8 @@ public class ExcelMergerMergeGroupTest {
 			setNumGroups(numGroups);
 			this.numNestedGroups = numNestedGroups;
 			setNumRowsTest(6 * Math.max(numGroups, 1)
-				+ (Math.max(numNestedGroups, 1) - 1) * numGroups); // im Belegungsplan gibt es 6 Zeilen pro Gruppe
+				// im Belegungsplan gibt es 6 Zeilen pro Gruppe
+				+ (Math.max(numNestedGroups, 1) - 1) * numGroups);
 
 			addData();
 		}
@@ -192,7 +193,7 @@ public class ExcelMergerMergeGroupTest {
 		protected void validate() {
 			int numRowsTotal = getNumRowsBefore() + getNumRowsTest() + getNumRowsAfter();
 
-			assertEquals("Should not add too many rows", numRowsTotal, getSheet().getLastRowNum() + 1);
+			assertEquals(numRowsTotal, getSheet().getLastRowNum() + 1, "Should not add too many rows");
 
 			assertEquals("Belegung", getVal(getSheet(), numRowsTotal - 7, "A"));
 			assertEquals("Plätze", getVal(getSheet(), numRowsTotal - 6, "A"));
@@ -298,11 +299,11 @@ public class ExcelMergerMergeGroupTest {
 
 		Tester(@Nonnull ContextBuilder builder) {
 			super(builder.getWorkbook(), builder.getSheet(), builder.getFieldMap(), builder.getNumRowsBefore());
-			this.numRowsTest = builder.getNumRowsTest();
-			this.excelMergerDTO = builder.getExcelMergerDTO();
-			this.merger = builder.getMerger();
-			this.validator = builder::validate;
-			this.builderClass = builder.getClass();
+			numRowsTest = builder.getNumRowsTest();
+			excelMergerDTO = builder.getExcelMergerDTO();
+			merger = builder.getMerger();
+			validator = builder::validate;
+			builderClass = builder.getClass();
 		}
 
 		/**
@@ -312,18 +313,19 @@ public class ExcelMergerMergeGroupTest {
 		public long test(@Nonnull String name) throws Exception {
 			Row row = currentRow();
 			Optional<GroupPlaceholder> group = detectGroup();
-			assertTrue("Group could not be found. Is numRowsBefore wrong?", group.isPresent());
+			assertTrue(group.isPresent(), "Group could not be found. Is numRowsBefore wrong?");
 
 			long start = System.currentTimeMillis();
 			ExcelMerger.mergeGroup(this, group.get(), excelMergerDTO, row, merger);
 			long duration = System.currentTimeMillis() - start;
 
 			String fileName = String.format("perf_test_%s_%s_sheet_%s_rows_%s.xlsx",
-				builderClass.getSimpleName(), name, getSheet().getSheetName(), numRowsTest);
+				builderClass.getSimpleName(), name, getSheet().getSheetName(), numRowsTest
+			);
 
 			writeWorkbookToFile(getWorkbook(), fileName);
 
-			this.validator.execute();
+			validator.execute();
 
 			return duration;
 		}

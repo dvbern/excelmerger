@@ -31,10 +31,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static ch.dvbern.oss.lib.excelmerger.ExcelMergerTestUtil.writeWorkbookToFile;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RowFillerTest {
 
@@ -129,7 +129,8 @@ public class RowFillerTest {
 		RowFiller rowFiller = RowFiller.initRowFiller(
 			sheet,
 			Arrays.asList(VALUE_1, VALUE_2, REPEAT_ROW),
-			numberOfDataRows);
+			numberOfDataRows
+		);
 
 		IntStream.range(0, numberOfDataRows).forEach(i -> {
 			ExcelMergerDTO rowDTO = new ExcelMergerDTO();

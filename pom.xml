@@ -34,6 +34,10 @@
     <properties>
         <slf4j.version>1.7.30</slf4j.version>
         <poi.version>4.1.2</poi.version>
+
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
+        <junit5.version>5.7.0</junit5.version>
     </properties>
 
     <name>DVBern ExcelMerger</name>
@@ -158,9 +162,14 @@
                 <version>${poi.version}</version>
             </dependency>
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.13.1</version>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit5.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit5.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.easymock</groupId>

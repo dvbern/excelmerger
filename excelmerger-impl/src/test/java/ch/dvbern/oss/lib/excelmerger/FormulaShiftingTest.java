@@ -15,10 +15,10 @@
 
 package ch.dvbern.oss.lib.excelmerger;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static ch.dvbern.oss.lib.excelmerger.ExcelMerger.SAME_ROW_CELL_REF;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FormulaShiftingTest {
 
