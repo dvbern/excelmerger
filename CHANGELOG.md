@@ -1,3 +1,5 @@
+# 4.0.0 Dependency update (Apache POI 5.0.0)
+
 # 2.2.1 Fix repeat group placeholder
 
 When using a repeatRow for a block, the block size should allow more than 9 rows.
@@ -10,7 +12,7 @@ Updated dependencies (e.g. Apache POI 4.0.1) and switched from Findbugs to Spotb
 
 # 2.1.1 Formula reference fix
 
-When using RowFiller, each copied row contained formular references to the row above instead of a reference to the 
+When using RowFiller, each copied row contained formular references to the row above instead of a reference to the
 row itself.
 
 # 2.1.0 Handling large data sets
@@ -49,7 +51,7 @@ Use the following dependency from now on:
 # 2.0.0 Typing support
 
 ## License change
-We are open sourcing! This library is now available under the Apache License, Version 2.0 
+We are open sourcing! This library is now available under the Apache License, Version 2.0
 
 ## POI Update
 Upgrade from 3.15 to 3.16
@@ -60,7 +62,7 @@ Deprecated code has been removed.
 MergeFields and Converters are now using property typings, such that you cannot set mistakingly
 the wrong merge value.
 
-If you used excel Merger before, you will have to adjust your MergeField enums. 
+If you used excel Merger before, you will have to adjust your MergeField enums.
 You can Use the following regular expressions to adjust to the new api.
 
 ```

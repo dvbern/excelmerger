@@ -90,6 +90,7 @@ public final class ExcelMerger {
 		mergeData(sheet, Arrays.asList(fields), excelMergerDTO);
 	}
 
+	@SuppressWarnings("PMD.CloseResource")
 	public static void mergeData(
 		@Nonnull Sheet sheet,
 		@Nonnull List<MergeField<?>> fields,
@@ -122,8 +123,7 @@ public final class ExcelMerger {
 	public static Workbook createWorkbookFromTemplate(@Nonnull InputStream is) throws ExcelTemplateParseException {
 		Objects.requireNonNull(is);
 
-		try {
-			InputStream poiCompatibleIS = toSeekable(is);
+		try(InputStream poiCompatibleIS = toSeekable(is)) {
 			// POI braucht einen Seekable InputStream
 			return WorkbookFactory.create(poiCompatibleIS);
 
@@ -363,7 +363,7 @@ public final class ExcelMerger {
 		Cell newCell = getCell(newRow, srcCell.getAddress().getColumn());
 		newCell.setCellStyle(srcCell.getCellStyle());
 
-		switch (srcCell.getCellTypeEnum()) {
+		switch (srcCell.getCellType()) {
 		case STRING:
 			newCell.setCellValue(srcCell.getStringCellValue());
 			break;
@@ -380,7 +380,7 @@ public final class ExcelMerger {
 			// nop
 			break;
 		default:
-			LOG.warn("Cell type not supported: {} @{}/{}", srcCell.getCellTypeEnum(), srcCell.getRowIndex(),
+			LOG.warn("Cell type not supported: {} @{}/{}", srcCell.getCellType(), srcCell.getRowIndex(),
 				srcCell.getColumnIndex());
 		}
 	}

@@ -26,7 +26,6 @@ import javax.annotation.Nullable;
 
 import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField;
 import ch.dvbern.oss.lib.excelmerger.mergefields.RepeatRowMergeField;
-import com.google.common.base.Preconditions;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -84,6 +83,7 @@ public class RowFiller {
 	 * @return a RowFiller, which can be used to write a single {@link ExcelMergerDTO} data row.
 	 * @see <a href="https://poi.apache.org/spreadsheet/how-to.html#sxssf">SXSSF HowTo</a>
 	 */
+	@SuppressWarnings("PMD.CloseResource")
 	@Nonnull
 	public static RowFiller initRowFiller(
 		@Nonnull XSSFSheet sheet,
@@ -103,10 +103,11 @@ public class RowFiller {
 			.findFirst()
 			.orElseThrow(() -> new ExcelMergeRuntimeException("No RepeatRowMergeField marker found"));
 
-		Preconditions.checkState(
-			groupPlaceholder.getRows() == 1,
-			"Currently, only 1 source row is supported, but {} given",
-			groupPlaceholder);
+		if (groupPlaceholder.getRows() != 1) {
+			throw new IllegalStateException("Currently, only 1 source row is supported, but "
+				+ groupPlaceholder
+				+ " given");
+		}
 
 		Row sourceRow = groupPlaceholder.getCell().getRow();
 		groupPlaceholder.clearPlaceholder();

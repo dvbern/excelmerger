@@ -14,10 +14,11 @@
  */
 package ch.dvbern.oss.lib.excelmerger.mergefields;
 
+import java.util.StringJoiner;
+
 import javax.annotation.Nonnull;
 
 import ch.dvbern.oss.lib.excelmerger.converters.Converter;
-import com.google.common.base.MoreObjects;
 
 public class DefaultMergeField<V> implements MergeField<V> {
 
@@ -63,9 +64,9 @@ public class DefaultMergeField<V> implements MergeField<V> {
 	@Override
 	@Nonnull
 	public String toString() {
-		return MoreObjects.toStringHelper(this)
-			.add("key", key)
-			.add("type", type)
+		return new StringJoiner(", ", DefaultMergeField.class.getSimpleName() + '[', "]")
+			.add("key=" + key)
+			.add("type=" + type)
 			.toString();
 	}
 }

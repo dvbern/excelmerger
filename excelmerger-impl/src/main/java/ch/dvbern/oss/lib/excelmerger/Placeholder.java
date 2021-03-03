@@ -15,13 +15,14 @@
 
 package ch.dvbern.oss.lib.excelmerger;
 
+import java.util.StringJoiner;
+
 import javax.annotation.Nonnull;
 
 import ch.dvbern.oss.lib.excelmerger.mergefields.MergeField;
-import com.google.common.base.MoreObjects;
 import org.apache.poi.ss.usermodel.Cell;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
 class Placeholder {
 	@Nonnull
@@ -34,9 +35,9 @@ class Placeholder {
 	private final MergeField<?> field;
 
 	Placeholder(@Nonnull Cell cell, @Nonnull String pattern, @Nonnull String key, @Nonnull MergeField<?> field) {
-		this.cell = checkNotNull(cell);
-		this.pattern = checkNotNull(pattern);
-		this.key = checkNotNull(key);
+		this.cell = requireNonNull(cell);
+		this.pattern = requireNonNull(pattern);
+		this.key = requireNonNull(key);
 		this.field = field;
 	}
 
@@ -63,10 +64,10 @@ class Placeholder {
 	@Override
 	@Nonnull
 	public String toString() {
-		return MoreObjects.toStringHelper(this)
-			.add("pattern", pattern)
-			.add("key", key)
-			.add("field", field)
+		return new StringJoiner(", ", Placeholder.class.getSimpleName() + '[', "]")
+			.add("pattern=" + pattern)
+			.add("key=" + key)
+			.add("field=" + field)
 			.toString();
 	}
 }

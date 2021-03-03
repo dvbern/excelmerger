@@ -31,7 +31,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
 public class Context {
 	public static final int BASE_10 = 10;
@@ -58,9 +58,9 @@ public class Context {
 		@Nonnull Map<String, MergeField<?>> mergeFields,
 		int startRow) {
 
-		this.workbook = checkNotNull(workbook);
-		this.sheet = checkNotNull(sheet);
-		this.mergeFields = checkNotNull(mergeFields);
+		this.workbook = requireNonNull(workbook);
+		this.sheet = requireNonNull(sheet);
+		this.mergeFields = requireNonNull(mergeFields);
 		this.currentRow = startRow;
 	}
 
@@ -118,7 +118,7 @@ public class Context {
 
 	@Nonnull
 	Optional<Placeholder> parsePlaceholder(@Nullable Cell cell) {
-		if (cell == null || cell.getCellTypeEnum() != CellType.STRING) {
+		if (cell == null || cell.getCellType() != CellType.STRING) {
 			return Optional.empty();
 		}
 

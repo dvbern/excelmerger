@@ -15,11 +15,12 @@
 
 package ch.dvbern.oss.lib.excelmerger;
 
+import java.util.StringJoiner;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import ch.dvbern.oss.lib.excelmerger.mergefields.RepeatRowMergeField;
-import com.google.common.base.MoreObjects;
 import org.apache.poi.ss.usermodel.Cell;
 
 class GroupPlaceholder extends Placeholder {
@@ -57,11 +58,11 @@ class GroupPlaceholder extends Placeholder {
 	@Override
 	@Nonnull
 	public String toString() {
-		return MoreObjects.toStringHelper(this)
-			.add("pattern", getPattern())
-			.add("key", getKey())
-			.add("field", getField())
-			.add("rows", rows)
+		return new StringJoiner(", ", GroupPlaceholder.class.getSimpleName() + '[', "]")
+			.add("pattern=" + getPattern())
+			.add("key=" + getKey())
+			.add("field=" + getField())
+			.add("rows=" + rows)
 			.toString();
 	}
 }

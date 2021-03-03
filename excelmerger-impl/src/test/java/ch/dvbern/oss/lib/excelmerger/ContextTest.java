@@ -33,7 +33,7 @@ public class ContextTest {
 		fields.put(key, mergeField);
 
 		expect(sheet.getFirstRowNum()).andReturn(0);
-		expect(cell.getCellTypeEnum()).andReturn(CellType.STRING);
+		expect(cell.getCellType()).andReturn(CellType.STRING);
 		expect(cell.getStringCellValue()).andReturn("{{" + key + ':' + value + "}}").anyTimes();
 
 		replay(cell, sheet);
