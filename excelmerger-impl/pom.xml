@@ -51,6 +51,36 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
+            <exclusions>
+                <!-- region PDF support removal -->
+                <exclusion>
+                    <groupId>org.apache.pdfbox</groupId>
+                    <artifactId>pdfbox</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.pdfbox</groupId>
+                    <artifactId>fontbox</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>de.rototor.pdfbox</groupId>
+                    <artifactId>graphics2d</artifactId>
+                </exclusion>
+                <!-- endregion PDF support removal -->
+                <!-- region SVG support removal -->
+                <exclusion>
+                    <groupId>org.apache.xmlgraphics</groupId>
+                    <artifactId>batik-all</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis-ext</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.xmlgraphics</groupId>
+                    <artifactId>xmlgraphics-commons</artifactId>
+                </exclusion>
+                <!-- endregion SVG support removal -->
+            </exclusions>
         </dependency>
 
         <dependency>
