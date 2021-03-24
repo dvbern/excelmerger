@@ -30,6 +30,9 @@ public interface MergeField<V> extends Serializable {
 
 	/**
 	 * Convenience method to get an (unmodifiable) list of all static MergeField instances of a class
+	 *
+	 * @param clazz the class for which declared static merge fields are searched
+	 * @return a list of all found static merge fields
 	 */
 	@Nonnull
 	static List<MergeField<?>> getStaticMergeFields(@Nonnull Class<?> clazz) {

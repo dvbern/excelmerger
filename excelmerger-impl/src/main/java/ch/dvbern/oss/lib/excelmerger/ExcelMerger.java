@@ -66,7 +66,7 @@ public final class ExcelMerger {
 		// utliity class
 	}
 
-	/**
+	/*
 	 * Fuellt ein Excel-Sheet mit den uebergebenen Daten aus.
 	 * Das Sheet wird in Repeat-Gruppen aufgeteilt, die auch verschachtelt sein koennen.
 	 * Repeat-Gruppen-Bezeichner ('z.B. {myRepeat}') muessen ein Feld vom Typ {@link Type#REPEAT_ROW} sein.

@@ -176,6 +176,10 @@ public final class StandardConverters {
 	 * To make it work, some cells or entire sheet should use automatic wrapping.
 	 *
 	 * Does not work with LibreOffice: the rows are using standard height.
+	 *
+	 * @param valueConverter any converter
+	 * @param <V> type of the value that's writen into the cell
+	 * @return a new converter with negative cell height to trigger automatic sizing
 	 */
 	public static <V> Converter<V> autoHeightConverter(Converter<V> valueConverter) {
 		return (@Nonnull Cell cell, @Nonnull String pattern, @Nullable V value) -> {

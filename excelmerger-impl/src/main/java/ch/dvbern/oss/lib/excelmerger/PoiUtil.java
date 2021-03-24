@@ -46,7 +46,7 @@ public final class PoiUtil {
 		// utility function
 	}
 
-	/**
+	/*
 	 * Workaround für POI >= 3.15: Bei shiftRows gehen die MergedRegions (Cell-Verbindungen) verloren.
 	 *
 	 * @see <a href="https://bz.apache.org/bugzilla/show_bug.cgi?id=60384">https://bz.apache.org/bugzilla/show_bug
