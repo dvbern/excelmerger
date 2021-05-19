@@ -23,7 +23,7 @@
     <parent>
         <groupId>ch.dvbern.oss.maven</groupId>
         <artifactId>parent</artifactId>
-        <version>3.0.4</version>
+        <version>3.0.5</version>
     </parent>
 
     <groupId>ch.dvbern.oss.excelmerger</groupId>
@@ -35,9 +35,10 @@
         <slf4j.version>1.7.30</slf4j.version>
         <poi.version>5.0.0</poi.version>
 
+        <spotbugs-maven-plugin.version>4.2.3</spotbugs-maven-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
-        <junit5.version>5.7.1</junit5.version>
+        <junit5.version>5.7.2</junit5.version>
     </properties>
 
     <name>DVBern ExcelMerger</name>
@@ -65,7 +66,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>1.4.1</version>
                     <executions>
                         <execution>
                             <id>check-maven-setup</id>
@@ -122,13 +122,7 @@
             <dependency>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-annotations</artifactId>
-                <version>4.2.1</version>
-                <optional>true</optional>
-            </dependency>
-            <dependency>
-                <groupId>com.google.code.findbugs</groupId>
-                <artifactId>jsr305</artifactId>
-                <version>3.0.2</version>
+                <version>${spotbugs-maven-plugin.version}</version>
                 <optional>true</optional>
             </dependency>
             <dependency>
@@ -169,7 +163,7 @@
             <dependency>
                 <groupId>org.easymock</groupId>
                 <artifactId>easymock</artifactId>
-                <version>4.2</version>
+                <version>4.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
