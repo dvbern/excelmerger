@@ -43,7 +43,7 @@
 
     <name>DVBern ExcelMerger</name>
     <description>This Java library can be used to generate Excel-Reports using templates</description>
-    <url>http://github.com/dvbern/excelmerger</url>
+    <url>https://github.com/dvbern/excelmerger</url>
 
     <build>
         <plugins>
@@ -173,14 +173,14 @@
             <name>DV Bern AG developers</name>
             <email>hallo@dvbern.ch</email>
             <organization>DV Bern AG</organization>
-            <organizationUrl>http://www.dvbern.ch</organizationUrl>
+            <organizationUrl>https://www.dvbern.ch</organizationUrl>
         </developer>
     </developers>
 
     <scm>
         <connection>scm:git:git://github.com/dvbern/excelmerger.git</connection>
         <developerConnection>scm:git:ssh://github.com:dvbern/excelmerger.git</developerConnection>
-        <url>http://github.com/dvbern/excelmerger</url>
+        <url>https://github.com/dvbern/excelmerger</url>
     </scm>
 
 </project>
