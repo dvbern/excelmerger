@@ -29,7 +29,7 @@ public class StringColorCellDTO {
 
 	public StringColorCellDTO(@Nonnull String value, @Nullable XSSFColor color) {
 		this.value = value;
-		this.color = color;
+		this.color = XSSFColor.toXSSFColor(color);
 	}
 
 	@Nonnull
