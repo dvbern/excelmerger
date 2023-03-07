@@ -48,6 +48,7 @@ import org.slf4j.LoggerFactory;
 import static ch.dvbern.oss.lib.excelmerger.PoiUtil.shiftDataValidations;
 import static ch.dvbern.oss.lib.excelmerger.PoiUtil.shiftNamedRanges;
 import static ch.dvbern.oss.lib.excelmerger.PoiUtil.shiftRowsAndMergedRegions;
+import static java.util.Objects.requireNonNull;
 
 public final class ExcelMerger {
 
@@ -83,21 +84,29 @@ public final class ExcelMerger {
 		@Nonnull Sheet sheet,
 		@Nonnull MergeField<?>[] fields,
 		@Nonnull ExcelMergerDTO excelMergerDTO) throws ExcelMergeException {
-		Objects.requireNonNull(sheet);
-		Objects.requireNonNull(fields);
-		Objects.requireNonNull(excelMergerDTO);
+		requireNonNull(sheet);
+		requireNonNull(fields);
+		requireNonNull(excelMergerDTO);
 
 		mergeData(sheet, Arrays.asList(fields), excelMergerDTO);
+	}
+
+	public static void mergeData(
+		@Nonnull Sheet sheet,
+		@Nonnull List<MergeField<?>> fields,
+		@Nonnull ExcelMergerDTO excelMergerDTO) throws ExcelMergeException {
+		mergeData(sheet, fields, excelMergerDTO, true);
 	}
 
 	@SuppressWarnings("PMD.CloseResource")
 	public static void mergeData(
 		@Nonnull Sheet sheet,
 		@Nonnull List<MergeField<?>> fields,
-		@Nonnull ExcelMergerDTO excelMergerDTO) throws ExcelMergeException {
-		Objects.requireNonNull(sheet);
-		Objects.requireNonNull(fields);
-		Objects.requireNonNull(excelMergerDTO);
+		@Nonnull ExcelMergerDTO excelMergerDTO,
+		boolean evaluate) throws ExcelMergeException {
+		requireNonNull(sheet);
+		requireNonNull(fields);
+		requireNonNull(excelMergerDTO);
 
 		Map<String, MergeField<?>> fieldMap = fields.stream()
 			.collect(Collectors.toMap(MergeField::getKey, field -> field));
@@ -105,23 +114,33 @@ public final class ExcelMerger {
 		Workbook wb = sheet.getWorkbook();
 		Context ctx = new Context(wb, sheet, fieldMap);
 
-		mergeData(excelMergerDTO, ctx);
+		mergeData(excelMergerDTO, ctx, evaluate);
 	}
 
 	public static void mergeData(@Nonnull ExcelMergerDTO excelMergerDTO, @Nonnull Context ctx)
 		throws ExcelMergeException {
+		mergeData(excelMergerDTO, ctx, true);
+	}
+
+	public static void mergeData(@Nonnull ExcelMergerDTO excelMergerDTO, @Nonnull Context ctx, boolean evaluate)
+		throws ExcelMergeException {
 
 		mergeGroup(ctx, Collections.singletonList(excelMergerDTO), ctx.getSheet().getLastRowNum() + 1);
 
-		FormulaEvaluator eval = ctx.getWorkbook().getCreationHelper().createFormulaEvaluator();
+		if (evaluate) {
+			evaluate(ctx.getWorkbook());
+		}
+	}
+
+	public static void evaluate(@Nonnull Workbook  workbook) {
+		FormulaEvaluator eval = workbook.getCreationHelper().createFormulaEvaluator();
 		eval.clearAllCachedResultValues();
 		eval.evaluateAll();
-
 	}
 
 	@Nonnull
 	public static Workbook createWorkbookFromTemplate(@Nonnull InputStream is) throws ExcelTemplateParseException {
-		Objects.requireNonNull(is);
+		requireNonNull(is);
 
 		try(InputStream poiCompatibleIS = toSeekable(is)) {
 			// POI braucht einen Seekable InputStream
