@@ -31,6 +31,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.BD_HUNDRED;
@@ -57,16 +58,31 @@ public final class StandardConverters {
 				String stringVal = dto.getValue();
 				cell.setCellValue(cell.getStringCellValue().replace(pattern, stringVal));
 
-				if (dto.getColor() != null) {
-					XSSFWorkbook wb = (XSSFWorkbook) cell.getSheet().getWorkbook();
-					XSSFCellStyle newCellStyle = wb.getStylesSource().createCellStyle();
-					newCellStyle.cloneStyleFrom(cell.getCellStyle());
-					newCellStyle.setFillForegroundColor(dto.getColor());
-					newCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-					cell.setCellStyle(newCellStyle);
+				if (dto.getColor() != null || dto.getFontColor() != null) {
+					applyColors(cell, dto);
 				}
 			}
 		};
+
+	private static void applyColors(@Nonnull Cell cell, @Nonnull StringColorCellDTO dto) {
+
+		XSSFWorkbook wb = (XSSFWorkbook) cell.getSheet().getWorkbook();
+		XSSFCellStyle newCellStyle = wb.getStylesSource().createCellStyle();
+		newCellStyle.cloneStyleFrom(cell.getCellStyle());
+
+		if(dto.getColor() != null) {
+			newCellStyle.setFillForegroundColor(dto.getColor());
+			newCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		}
+
+		if (dto.getFontColor() != null) {
+			XSSFFont font = wb.createFont();
+			font.setColor(dto.getFontColor());
+			newCellStyle.setFont(font);
+		}
+
+		cell.setCellStyle(newCellStyle);
+	}
 
 	public static final ParametrisedConverter<DateTimeFormatter, LocalDate> LOCAL_DATE_CONVERTER =
 		formatter -> (@Nonnull Cell cell, @Nonnull String pattern, @Nullable LocalDate value) ->
