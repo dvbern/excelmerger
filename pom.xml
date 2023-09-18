@@ -23,7 +23,7 @@
     <parent>
         <groupId>ch.dvbern.oss.maven</groupId>
         <artifactId>parent</artifactId>
-        <version>3.0.5</version>
+        <version>5.0.0</version>
     </parent>
 
     <groupId>ch.dvbern.oss.excelmerger</groupId>
@@ -32,13 +32,13 @@
     <packaging>pom</packaging>
 
     <properties>
-        <slf4j.version>1.7.36</slf4j.version>
-        <poi.version>5.2.2</poi.version>
+        <slf4j.version>2.0.9</slf4j.version>
+        <poi.version>5.2.3</poi.version>
 
-        <spotbugs-maven-plugin.version>4.2.3</spotbugs-maven-plugin.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
-        <junit.jupiter.version>5.8.2</junit.jupiter.version>
+        <spotbugs-annotations.version>4.7.3</spotbugs-annotations.version>
+        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.1.2</maven-failsafe-plugin.version>
+        <junit.jupiter.version>5.10.0</junit.jupiter.version>
     </properties>
 
     <name>DVBern ExcelMerger</name>
@@ -50,6 +50,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>10.12.3</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -63,33 +70,6 @@
 
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>check-maven-setup</id>
-                            <goals>
-                                <goal>enforce</goal>
-                            </goals>
-                            <configuration>
-                                <fail>true</fail>
-                                <failFast>true</failFast>
-                                <rules>
-                                    <dependencyConvergence />
-                                    <reactorModuleConvergence />
-                                    <requireJavaVersion>
-                                        <!-- Bei aelteren Versionen aendern die Unit-Test-Ergebnisse bei Berechnungen mit BigDecimal -->
-                                        <version>[1.8.0-40,)</version>
-                                    </requireJavaVersion>
-                                    <requireMavenVersion>
-                                        <version>3.3</version>
-                                    </requireMavenVersion>
-                                </rules>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
                 <plugin>
                     <groupId>org.owasp</groupId>
                     <artifactId>dependency-check-maven</artifactId>
@@ -116,7 +96,7 @@
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-bom</artifactId>
-                <version>2.17.2</version>
+                <version>2.19.0</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -136,7 +116,7 @@
             <dependency>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-annotations</artifactId>
-                <version>${spotbugs-maven-plugin.version}</version>
+                <version>${spotbugs-annotations.version}</version>
                 <optional>true</optional>
             </dependency>
             <dependency>
@@ -146,8 +126,13 @@
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
+                <artifactId>slf4j-reload4j</artifactId>
                 <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.13.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
@@ -157,7 +142,7 @@
             <dependency>
                 <groupId>org.easymock</groupId>
                 <artifactId>easymock</artifactId>
-                <version>4.3</version>
+                <version>5.2.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
