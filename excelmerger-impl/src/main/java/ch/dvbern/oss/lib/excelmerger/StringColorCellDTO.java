@@ -59,11 +59,12 @@ public class StringColorCellDTO {
 		this.color = color;
 	}
 
+	@Nullable
 	public XSSFColor getFontColor() {
 		return fontColor;
 	}
 
-	public void setFontColor(XSSFColor fontColor) {
+	public void setFontColor(@Nullable XSSFColor fontColor) {
 		this.fontColor = fontColor;
 	}
 }
