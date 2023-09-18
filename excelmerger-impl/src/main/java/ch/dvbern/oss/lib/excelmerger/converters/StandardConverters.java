@@ -16,6 +16,7 @@
 package ch.dvbern.oss.lib.excelmerger.converters;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -31,6 +32,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.BD_HUNDRED;
@@ -57,16 +59,32 @@ public final class StandardConverters {
 				String stringVal = dto.getValue();
 				cell.setCellValue(cell.getStringCellValue().replace(pattern, stringVal));
 
-				if (dto.getColor() != null) {
-					XSSFWorkbook wb = (XSSFWorkbook) cell.getSheet().getWorkbook();
-					XSSFCellStyle newCellStyle = wb.getStylesSource().createCellStyle();
-					newCellStyle.cloneStyleFrom(cell.getCellStyle());
-					newCellStyle.setFillForegroundColor(dto.getColor());
-					newCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-					cell.setCellStyle(newCellStyle);
+				if (dto.getColor() != null || dto.getFontColor() != null) {
+					applyColors(cell, dto);
 				}
 			}
 		};
+
+	@SuppressWarnings("PMD.CloseResource")
+	private static void applyColors(@Nonnull Cell cell, @Nonnull StringColorCellDTO dto) {
+
+		XSSFWorkbook wb = (XSSFWorkbook) cell.getSheet().getWorkbook();
+		XSSFCellStyle newCellStyle = wb.getStylesSource().createCellStyle();
+		newCellStyle.cloneStyleFrom(cell.getCellStyle());
+
+		if (dto.getColor() != null) {
+			newCellStyle.setFillForegroundColor(dto.getColor());
+			newCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		}
+
+		if (dto.getFontColor() != null) {
+			XSSFFont font = wb.createFont();
+			font.setColor(dto.getFontColor());
+			newCellStyle.setFont(font);
+		}
+
+		cell.setCellStyle(newCellStyle);
+	}
 
 	public static final ParametrisedConverter<DateTimeFormatter, LocalDate> LOCAL_DATE_CONVERTER =
 		formatter -> (@Nonnull Cell cell, @Nonnull String pattern, @Nullable LocalDate value) ->
@@ -117,7 +135,7 @@ public final class StandardConverters {
 		(@Nonnull Cell cell, @Nonnull String pattern, @Nullable BigDecimal value) -> {
 			if (pattern.equals(cell.getStringCellValue())) {
 				if (value != null) {
-					double doubleValue = value.divide(BD_HUNDRED, SCALE, BigDecimal.ROUND_HALF_UP).doubleValue();
+					double doubleValue = value.divide(BD_HUNDRED, SCALE, RoundingMode.HALF_UP).doubleValue();
 					cell.setCellValue(doubleValue);
 				} else {
 					cell.setCellValue(EMPTY_STRING);
@@ -172,9 +190,9 @@ public final class StandardConverters {
 	/**
 	 * Uses a hack, to make Excel automatically adjust row heights (sets row height to -1).
 	 * <a href="https://stackoverflow.com/a/35789927">https://stackoverflow.com/a/35789927</a>.
-	 *
+	 * <p>
 	 * To make it work, some cells or entire sheet should use automatic wrapping.
-	 *
+	 * <p>
 	 * Does not work with LibreOffice: the rows are using standard height.
 	 *
 	 * @param valueConverter any converter

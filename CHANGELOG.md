@@ -1,3 +1,25 @@
+# 4.5.0 Dependency Update (Apache POI 5.2.3)
+
+- CI/CD update
+- dependency updates
+- StringColorCellDTO supports now an optional font color 
+
+# 4.4.0 Introduce flag to make evaluation of formulas optional
+
+Since the evaluation can be performance critical.
+
+# 4.3.0 Dependency Update (Apache POI 5.2.2)    
+
+# 4.2.0 Dependency update
+
+# 4.1.1 Dependency update
+
+# 4.1.0 Dependency update (Apache POI 5.1.0)
+
+POI changed internally the way it's rounding. It's acutally more predicatable now, but it differs in some calculations.
+
+# 4.0.2 artifacts in maven central
+
 # 4.0.0 Dependency update (Apache POI 5.0.0)
 
 # 2.2.1 Fix repeat group placeholder

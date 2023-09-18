@@ -27,9 +27,18 @@ public class StringColorCellDTO {
 	@Nullable
 	private XSSFColor color;
 
+	@Nullable
+	private XSSFColor fontColor;
+
 	public StringColorCellDTO(@Nonnull String value, @Nullable XSSFColor color) {
 		this.value = value;
 		this.color = XSSFColor.toXSSFColor(color);
+	}
+
+	public StringColorCellDTO(@Nonnull String value, @Nullable XSSFColor color, @Nullable XSSFColor fontColor) {
+		this.value = value;
+		this.color = XSSFColor.toXSSFColor(color);
+		this.fontColor = XSSFColor.toXSSFColor(fontColor);
 	}
 
 	@Nonnull
@@ -48,5 +57,14 @@ public class StringColorCellDTO {
 
 	public void setColor(@Nullable XSSFColor color) {
 		this.color = color;
+	}
+
+	@Nullable
+	public XSSFColor getFontColor() {
+		return fontColor;
+	}
+
+	public void setFontColor(@Nullable XSSFColor fontColor) {
+		this.fontColor = fontColor;
 	}
 }
