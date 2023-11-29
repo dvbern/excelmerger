@@ -21,7 +21,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
@@ -34,6 +36,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder.BorderSide;
 
 import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.BD_HUNDRED;
 import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.BOOLEAN_VALUE;
@@ -46,6 +49,13 @@ import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.writerNumbe
 
 @SuppressWarnings("PMD.ClassNamingConventions")
 public final class StandardConverters {
+
+	private static final List<BorderSide> ALL_BORDERS = Arrays.asList(
+		BorderSide.TOP,
+		BorderSide.RIGHT,
+		BorderSide.BOTTOM,
+		BorderSide.LEFT
+	);
 
 	public static final Converter<String> STRING_CONVERTER =
 		(@Nonnull Cell cell, @Nonnull String pattern, @Nullable String value) -> {
@@ -81,6 +91,19 @@ public final class StandardConverters {
 			XSSFFont font = wb.createFont();
 			font.setColor(dto.getFontColor());
 			newCellStyle.setFont(font);
+		}
+
+		if (dto.getBorderColor() != null) {
+//			ALL_BORDERS.forEach(borderSide -> newCellStyle.setBorderColor(borderSide, dto.getBorderColor()));
+			newCellStyle.setTopBorderColor(dto.getBorderColor());
+			newCellStyle.setRightBorderColor(dto.getBorderColor());
+			newCellStyle.setBottomBorderColor(dto.getBorderColor());
+			newCellStyle.setLeftBorderColor(dto.getBorderColor());
+
+			newCellStyle.setBorderTop(dto.getBorderStyle());
+			newCellStyle.setBorderRight(dto.getBorderStyle());
+			newCellStyle.setBorderBottom(dto.getBorderStyle());
+			newCellStyle.setBorderLeft(dto.getBorderStyle());
 		}
 
 		cell.setCellStyle(newCellStyle);

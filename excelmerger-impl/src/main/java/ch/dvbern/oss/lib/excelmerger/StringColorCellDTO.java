@@ -17,6 +17,7 @@ package ch.dvbern.oss.lib.excelmerger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 
 public class StringColorCellDTO {
@@ -29,6 +30,12 @@ public class StringColorCellDTO {
 
 	@Nullable
 	private XSSFColor fontColor;
+
+	@Nullable
+	private XSSFColor borderColor;
+
+	@Nullable
+	private BorderStyle borderStyle;
 
 	public StringColorCellDTO(@Nonnull String value, @Nullable XSSFColor color) {
 		this.value = value;
@@ -66,5 +73,23 @@ public class StringColorCellDTO {
 
 	public void setFontColor(@Nullable XSSFColor fontColor) {
 		this.fontColor = fontColor;
+	}
+
+	@Nullable
+	public XSSFColor getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(@Nullable XSSFColor borderColor) {
+		this.borderColor = borderColor;
+	}
+
+	@Nullable
+	public BorderStyle getBorderStyle() {
+		return borderStyle;
+	}
+
+	public void setBorderStyle(@Nullable BorderStyle borderStyle) {
+		this.borderStyle = borderStyle;
 	}
 }
