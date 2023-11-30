@@ -50,13 +50,6 @@ import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.writerNumbe
 @SuppressWarnings("PMD.ClassNamingConventions")
 public final class StandardConverters {
 
-	private static final List<BorderSide> ALL_BORDERS = Arrays.asList(
-		BorderSide.TOP,
-		BorderSide.RIGHT,
-		BorderSide.BOTTOM,
-		BorderSide.LEFT
-	);
-
 	public static final Converter<String> STRING_CONVERTER =
 		(@Nonnull Cell cell, @Nonnull String pattern, @Nullable String value) -> {
 			String stringVal = value == null ? EMPTY_STRING : value;
@@ -94,12 +87,13 @@ public final class StandardConverters {
 		}
 
 		if (dto.getBorderColor() != null) {
-//			ALL_BORDERS.forEach(borderSide -> newCellStyle.setBorderColor(borderSide, dto.getBorderColor()));
 			newCellStyle.setTopBorderColor(dto.getBorderColor());
 			newCellStyle.setRightBorderColor(dto.getBorderColor());
 			newCellStyle.setBottomBorderColor(dto.getBorderColor());
 			newCellStyle.setLeftBorderColor(dto.getBorderColor());
+		}
 
+		if (dto.getBorderStyle() != null) {
 			newCellStyle.setBorderTop(dto.getBorderStyle());
 			newCellStyle.setBorderRight(dto.getBorderStyle());
 			newCellStyle.setBorderBottom(dto.getBorderStyle());
