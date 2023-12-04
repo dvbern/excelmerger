@@ -83,6 +83,20 @@ public final class StandardConverters {
 			newCellStyle.setFont(font);
 		}
 
+		if (dto.getBorderColor() != null) {
+			newCellStyle.setTopBorderColor(dto.getBorderColor());
+			newCellStyle.setRightBorderColor(dto.getBorderColor());
+			newCellStyle.setBottomBorderColor(dto.getBorderColor());
+			newCellStyle.setLeftBorderColor(dto.getBorderColor());
+		}
+
+		if (dto.getBorderStyle() != null) {
+			newCellStyle.setBorderTop(dto.getBorderStyle());
+			newCellStyle.setBorderRight(dto.getBorderStyle());
+			newCellStyle.setBorderBottom(dto.getBorderStyle());
+			newCellStyle.setBorderLeft(dto.getBorderStyle());
+		}
+
 		cell.setCellStyle(newCellStyle);
 	}
 
