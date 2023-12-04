@@ -21,9 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
@@ -36,7 +34,6 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder.BorderSide;
 
 import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.BD_HUNDRED;
 import static ch.dvbern.oss.lib.excelmerger.converters.ConverterUtil.BOOLEAN_VALUE;
